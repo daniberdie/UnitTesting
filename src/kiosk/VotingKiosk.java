@@ -6,29 +6,42 @@ import services.ElectoralOrganism;
 import services.MailerService;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
+import java.util.Set;
+
 /**
  * Implements a simplification of Use Case: Emit eVote
  */
 public class VotingKiosk {
 
+    Set<Party> parties;
+    VoteCounter voteCounter;
+    ElectoralOrganism electoralOrganism;
+    MailerService mailerService;
+
     public VotingKiosk() {
-        throw new NotImplementedException();
+        voteCounter = new VoteCounter(parties);
     }
 
     public void setElectoralOrganism(ElectoralOrganism eO) {
-        throw new NotImplementedException();
+        electoralOrganism = eO;
     }
 
     public void setMailerService(MailerService mService) {
-        throw new NotImplementedException();
+        mailerService = mService;
     }
 
     public void vote(Party party) {
-        throw new NotImplementedException();
+
+        // Check if the user can vote
+
+        // Send the vote
+
+        // Send the email
+
     }
 
     public void sendeReceipt(MailAddress address) {
-        throw new NotImplementedException();
+
     }
 
 }

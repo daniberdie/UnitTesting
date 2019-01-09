@@ -37,7 +37,7 @@ class VoteCounterTest {
         testVoteCounter = new VoteCounter(testParties);
     }
 
-    // region Individual counting
+    // region Vote counting
 
     @Test
     void testCountParty() {
@@ -55,6 +55,15 @@ class VoteCounterTest {
     void testCountBlank() {
         testVoteCounter.countBlank();
         assertEquals(1, testVoteCounter.getBlanks());
+    }
+
+    @Test
+    void testGetTotal()
+    {
+        testVoteCounter.countParty(testParty);
+        testVoteCounter.countNull();
+        testVoteCounter.countBlank();
+        assertEquals(3, testVoteCounter.getTotal());
     }
 
     // endregion
