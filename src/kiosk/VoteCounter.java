@@ -4,6 +4,7 @@ import data.Party;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Set;
 
 /**
@@ -11,54 +12,74 @@ import java.util.Set;
  */
 public class VoteCounter {
 
+    private static final String NULL_VOTE = "null";
+    private static final String BLANK_VOTE = "";
+
     private int nullVotes = 0;
     private int blankVotes = 0;
-    private HashMap<String,Integer> partyVotes;
+    private HashMap<Party, Integer> partyVotes;
 
     public VoteCounter(Set<Party> validParties) {
 
         // Initialize the map with the parties, all starting from 0
         partyVotes = new HashMap<>();
-        for(Party party: validParties)
-        {
-            partyVotes.put(party.getName(), 0);
+        for (Party party : validParties) {
+            partyVotes.put(party, 0);
         }
     }
 
     public void countParty(Party party) {
-        partyVotes.put(
-                party.getName(),
-                partyVotes.get(party.getName()) + 1);
+        partyVotes.put(party, partyVotes.get(party) + 1);
     }
 
     public void countNull() {
-        nullVotes+=1;
+        nullVotes += 1;
     }
 
     public void countBlank() {
-        blankVotes+=1;
+        blankVotes += 1;
     }
 
     public void scrutinize(Party party) {
 
+        switch (party.getName()) {
+            // Null vote
+            case NULL_VOTE:
+                countNull();
+                break;
+            // Blank vote
+            case BLANK_VOTE:
+                countBlank();
+                break;
+            // Valid vote, count corresponding party
+            default:
+                countParty(party);
+                break;
+        }
     }
 
     // region Getters
 
     public int getVotesFor(Party party) {
-        throw new NotImplementedException();
+        return partyVotes.get(party);
     }
 
     public int getNulls() {
-        throw new NotImplementedException();
+        return nullVotes;
     }
 
     public int getBlanks() {
-        throw new NotImplementedException();
+        return blankVotes;
     }
 
     public int getTotal() {
-        throw new NotImplementedException();
+        // Sum the total votes of every party
+        int total = 0;
+        for (Party party : partyVotes.keySet()) {
+            total += getVotesFor(party);
+        }
+        // Return the party votes, plus the nulls and blanks
+        return total + getNulls() + getBlanks();
     }
 
     // endregion
