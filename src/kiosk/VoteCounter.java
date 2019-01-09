@@ -1,19 +1,14 @@
 package kiosk;
 
 import data.Party;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Set;
 
 /**
- * A class that represents the result in an election site
+ * A class that represents the result in an election site.
  */
 public class VoteCounter {
-
-    private static final String NULL_VOTE = "null";
-    private static final String BLANK_VOTE = "";
 
     private int nullVotes = 0;
     private int blankVotes = 0;
@@ -44,11 +39,11 @@ public class VoteCounter {
 
         switch (party.getName()) {
             // Null vote
-            case NULL_VOTE:
+            case Party.NULL_VOTE:
                 countNull();
                 break;
             // Blank vote
-            case BLANK_VOTE:
+            case Party.BLANK_VOTE:
                 countBlank();
                 break;
             // Valid vote, count corresponding party

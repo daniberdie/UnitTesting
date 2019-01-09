@@ -7,6 +7,9 @@ public class Party {
 
     public static final String CONSTRUCTOR_EXCEPTION = "Null name string not allowed.";
 
+    public static final String NULL_VOTE = "null";
+    public static final String BLANK_VOTE = "";
+
     private final String name;
 
     public Party(String name) {
