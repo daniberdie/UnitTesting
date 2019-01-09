@@ -12,8 +12,7 @@ public class Party {
     public Party(String name) {
 
         // Control null parameter
-        if(name == null)
-        {
+        if (name == null) {
             throw new IllegalArgumentException(CONSTRUCTOR_EXCEPTION);
         }
 
@@ -23,6 +22,8 @@ public class Party {
     public String getName() {
         return name;
     }
+
+    // region Overridden methods
 
     @Override
     public boolean equals(Object other) {
@@ -34,6 +35,18 @@ public class Party {
             return false;
         }
 
-        return name.equals(((Party)other).name);
+        return name.equals(((Party) other).name);
     }
+
+    @Override
+    public int hashCode() {
+        return name.hashCode();
+    }
+
+    @Override
+    public String toString() {
+        return "Party{" + "name='" + name + '\'' + '}';
+    }
+
+    // endregion
 }
