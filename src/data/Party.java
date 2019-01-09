@@ -8,10 +8,17 @@ public class Party {
     private final String name;
 
     public Party(String name) {
+
+        // Control null parameter
+        if(name == null)
+        {
+            throw new IllegalArgumentException("Null name string not allowed.");
+        }
+
         this.name = name;
     }
 
-    public String getnmae() {
+    public String getName() {
         return name;
     }
 
