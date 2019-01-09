@@ -5,6 +5,8 @@ package data;
  */
 public class Party {
 
+    public static final String CONSTRUCTOR_EXCEPTION = "Null name string not allowed.";
+
     private final String name;
 
     public Party(String name) {
@@ -12,7 +14,7 @@ public class Party {
         // Control null parameter
         if(name == null)
         {
-            throw new IllegalArgumentException("Null name string not allowed.");
+            throw new IllegalArgumentException(CONSTRUCTOR_EXCEPTION);
         }
 
         this.name = name;
