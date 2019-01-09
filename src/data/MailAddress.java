@@ -2,6 +2,13 @@ package data;
 
 public class MailAddress {
 
-    // TODO Develop this class
+    private final String mailAddress;
 
+    public MailAddress(String mailAddress) {
+        this.mailAddress = mailAddress;
+    }
+
+    public String getMailAddress() {
+        return mailAddress;
+    }
 }
