@@ -1,10 +1,11 @@
 package kiosk;
 
+import data.DigitalSignature;
+import data.Nif;
 import data.Party;
 import data.MailAddress;
 import services.ElectoralOrganism;
 import services.MailerService;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.util.Set;
 
@@ -13,10 +14,10 @@ import java.util.Set;
  */
 public class VotingKiosk {
 
-    Set<Party> parties;
-    VoteCounter voteCounter;
-    ElectoralOrganism electoralOrganism;
-    MailerService mailerService;
+    private Set<Party> parties;
+    private VoteCounter voteCounter;
+    private ElectoralOrganism electoralOrganism;
+    private MailerService mailerService;
 
     public VotingKiosk() {
         voteCounter = new VoteCounter(parties);
@@ -30,18 +31,25 @@ public class VotingKiosk {
         mailerService = mService;
     }
 
-    public void vote(Party party) {
+    public void vote(Party party, Nif nif, MailAddress mailAddress, boolean wantsReceipt) {
 
         // Check if the user can vote
+        if(electoralOrganism.canVote(nif)) {
 
-        // Send the vote
+            // Send the vote and invalidate the voter using the nif
+            voteCounter.countParty(party);
+            electoralOrganism.disableVoter(nif);
 
-        // Send the email
-
+            // Send the email
+            if(wantsReceipt)
+            {
+                sendeReceipt(mailAddress, electoralOrganism.askForDigitalSignature(party));
+            }
+        }
     }
 
-    public void sendeReceipt(MailAddress address) {
-
+    public void sendeReceipt(MailAddress address, DigitalSignature digitalSignature) {
+        mailerService.send(address, digitalSignature);
     }
 
 }
