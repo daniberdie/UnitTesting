@@ -16,7 +16,7 @@ public class Party {
 
         // Control null parameter
         if (name == null) {
-            throw new IllegalArgumentException(CONSTRUCTOR_EXCEPTION);
+            throw new NullPointerException(CONSTRUCTOR_EXCEPTION);
         }
 
         this.name = name;

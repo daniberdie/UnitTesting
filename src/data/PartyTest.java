@@ -11,6 +11,6 @@ class PartyTest {
 
         Executable exception = () -> new Party(null);
 
-        assertThrows(IllegalArgumentException.class, exception, Party.CONSTRUCTOR_EXCEPTION);
+        assertThrows(NullPointerException.class, exception, Party.CONSTRUCTOR_EXCEPTION);
     }
 }
