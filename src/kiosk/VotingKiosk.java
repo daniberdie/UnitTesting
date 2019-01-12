@@ -1,6 +1,5 @@
 package kiosk;
 
-import data.DigitalSignature;
 import data.Nif;
 import data.Party;
 import data.MailAddress;
@@ -35,8 +34,8 @@ public class VotingKiosk {
         voteCounter.countParty(party);
     }
 
-    public void triggerVoteProcess(Party party, Nif nif, MailAddress mailAddress, boolean wantsReceipt)
-    {
+    public void VotingProcess(Party party, Nif nif, MailAddress mailAddress, boolean wantsReceipt)
+            throws VotingRightsFailedException {
         // Check if the user can vote
         if (electoralOrganism.canVote(nif)) {
 
@@ -46,17 +45,17 @@ public class VotingKiosk {
 
             // Send the email if the voter wants
             if (wantsReceipt) {
-                sendeReceipt(mailAddress);
+                sendeReceipt(mailAddress, party);
             }
             System.out.println("Vote accepted successfully.");
         }
         // Notify that the voter cannot vote
         else {
-            throw new IllegalStateException("This voter cannot vote.");
+            throw new VotingRightsFailedException("This voter cannot vote.");
         }
     }
 
-    public void sendeReceipt(MailAddress address) {
-        mailerService.send(address, electoralOrganism.askForDigitalSignature(null));
+    public void sendeReceipt(MailAddress address, Party party) {
+        mailerService.send(address, electoralOrganism.askForDigitalSignature(party));
     }
 }

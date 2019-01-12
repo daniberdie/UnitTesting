@@ -16,7 +16,7 @@ public class VoteCounter {
 
     public VoteCounter(Set<Party> validParties) {
 
-        // Initialize the map with the parties, all starting from 0
+        // Initialize the map with the parties, all starting from 0 votes
         partyVotes = new HashMap<>();
         for (Party party : validParties) {
             partyVotes.put(party, 0);
