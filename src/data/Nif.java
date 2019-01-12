@@ -2,11 +2,11 @@ package data;
 
 public class Nif {
 
-    private static final String ConstructorExceptionMsgNull = "Null string.";
-    private static final String ConstructorExceptionMsgNotNif = "Not a NIF: ";
+    private static final String CONSTRUCTOR_EXCEPTION_MSG_NULL = "Null string.";
+    private static final String CONSTRUCTOR_EXCEPTION_MSG_NOT_NIF = "Not a NIF: ";
 
-    private static final short NifLength = 9;
-    private static final short NifDigitLength = 8;
+    private static final short NIF_LENGTH = 9;
+    private static final short NIF_DIGIT_LENGTH = 8;
 
     private final String nif;
 
@@ -14,25 +14,25 @@ public class Nif {
 
         // Control null parameter
         if (nif == null) {
-            throw new NullPointerException(ConstructorExceptionMsgNull);
+            throw new NullPointerException(CONSTRUCTOR_EXCEPTION_MSG_NULL);
         }
 
         // Check length
-        if(nif.length() != NifLength)
+        if(nif.length() != NIF_LENGTH)
         {
-            throw new IllegalArgumentException(ConstructorExceptionMsgNotNif + nif);
+            throw new IllegalArgumentException(CONSTRUCTOR_EXCEPTION_MSG_NOT_NIF + nif);
         }
 
         // Check last character is letter
         if(!Character.isAlphabetic(nif.charAt(nif.length()-1)))
         {
-            throw new IllegalArgumentException(ConstructorExceptionMsgNotNif + nif);
+            throw new IllegalArgumentException(CONSTRUCTOR_EXCEPTION_MSG_NOT_NIF + nif);
         }
         // Check first 8 characters are digits
-        for (char c : nif.substring(0, NifDigitLength-1).toCharArray())
+        for (char c : nif.substring(0, NIF_DIGIT_LENGTH -1).toCharArray())
         {
             if (!Character.isDigit(c))
-                throw new IllegalArgumentException(ConstructorExceptionMsgNotNif + nif);
+                throw new IllegalArgumentException(CONSTRUCTOR_EXCEPTION_MSG_NOT_NIF + nif);
         }
 
         this.nif = nif;

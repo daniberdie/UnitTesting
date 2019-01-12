@@ -4,8 +4,8 @@ import java.util.Arrays;
 
 public class DigitalSignature {
 
-    private static final String ConstructorExceptionMsgNull = "Null array.";
-    private static final String ConstructorExceptionMsgEmpty = "Empty array.";
+    private static final String CONSTRUCTOR_EXCEPTION_MSG_NULL = "Null array.";
+    private static final String CONSTRUCTOR_EXCEPTION_MSG_EMPTY = "Empty array.";
 
     private final byte[] digitalSignature;
 
@@ -13,12 +13,12 @@ public class DigitalSignature {
 
         // Control null parameter
         if (digitalSignature == null) {
-            throw new NullPointerException(ConstructorExceptionMsgNull);
+            throw new NullPointerException(CONSTRUCTOR_EXCEPTION_MSG_NULL);
         }
 
         // Check array is not empty
         if (digitalSignature.length == 0) {
-            throw new IllegalArgumentException(ConstructorExceptionMsgEmpty);
+            throw new IllegalArgumentException(CONSTRUCTOR_EXCEPTION_MSG_EMPTY);
         }
 
         this.digitalSignature = digitalSignature;

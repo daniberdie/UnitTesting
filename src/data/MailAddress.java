@@ -2,8 +2,8 @@ package data;
 
 public class MailAddress {
 
-    private static final String ConstructorExceptionMsgNull = "Null string.";
-    private static final String ConstructorExceptionMsgNotAnEmail = "Not an email.";
+    private static final String CONSTRUCTOR_EXCEPTION_MSG_NULL = "Null string.";
+    private static final String CONSTRUCTOR_EXCEPTION_MSG_NOT_EMAIL = "Not an email.";
 
     private final String mailAddress;
 
@@ -11,16 +11,16 @@ public class MailAddress {
 
         // Control null parameter
         if (mailAddress == null) {
-            throw new NullPointerException(ConstructorExceptionMsgNull);
+            throw new NullPointerException(CONSTRUCTOR_EXCEPTION_MSG_NULL);
         }
         // Is an actual email
         if(!mailAddress.contains("@"))
         {
-            throw new IllegalArgumentException(ConstructorExceptionMsgNotAnEmail);
+            throw new IllegalArgumentException(CONSTRUCTOR_EXCEPTION_MSG_NOT_EMAIL);
         }
         // Is an actual domain
         if(!mailAddress.contains(".")) {
-            throw new IllegalArgumentException(ConstructorExceptionMsgNull);
+            throw new IllegalArgumentException(CONSTRUCTOR_EXCEPTION_MSG_NULL);
         }
 
         this.mailAddress = mailAddress;

@@ -5,7 +5,7 @@ package data;
  */
 public class Party {
 
-    public static final String CONSTRUCTOR_EXCEPTION = "Null name string not allowed.";
+    public static final String CONSTRUCTOR_EXCEPTION_MSG_NULL = "Null name string not allowed.";
 
     public static final String NULL_VOTE = "null";
     public static final String BLANK_VOTE = "";
@@ -16,7 +16,7 @@ public class Party {
 
         // Control null parameter
         if (name == null) {
-            throw new NullPointerException(CONSTRUCTOR_EXCEPTION);
+            throw new NullPointerException(CONSTRUCTOR_EXCEPTION_MSG_NULL);
         }
 
         this.name = name;

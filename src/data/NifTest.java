@@ -13,7 +13,7 @@ public class NifTest {
 
         Executable exception = () -> new Nif(null);
 
-        assertThrows(NullPointerException.class, exception, Party.CONSTRUCTOR_EXCEPTION);
+        assertThrows(NullPointerException.class, exception, Party.CONSTRUCTOR_EXCEPTION_MSG_NULL);
     }
 
     @Test
@@ -21,7 +21,7 @@ public class NifTest {
 
         Executable exception = () -> new Nif("49236726BB");
 
-        assertThrows(IllegalArgumentException.class, exception, Party.CONSTRUCTOR_EXCEPTION);
+        assertThrows(IllegalArgumentException.class, exception, Party.CONSTRUCTOR_EXCEPTION_MSG_NULL);
     }
 
     @Test
@@ -29,7 +29,7 @@ public class NifTest {
 
         Executable exception = () -> new Nif("492367260");
 
-        assertThrows(IllegalArgumentException.class, exception, Party.CONSTRUCTOR_EXCEPTION);
+        assertThrows(IllegalArgumentException.class, exception, Party.CONSTRUCTOR_EXCEPTION_MSG_NULL);
     }
 
     @Test
@@ -37,7 +37,7 @@ public class NifTest {
 
         Executable exception = () -> new Nif("492B6726B");
 
-        assertThrows(IllegalArgumentException.class, exception, Party.CONSTRUCTOR_EXCEPTION);
+        assertThrows(IllegalArgumentException.class, exception, Party.CONSTRUCTOR_EXCEPTION_MSG_NULL);
     }
 
     @Test
