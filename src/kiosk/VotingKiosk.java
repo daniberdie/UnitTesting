@@ -31,28 +31,32 @@ public class VotingKiosk {
         mailerService = mService;
     }
 
-    public void vote(Party party, Nif nif, MailAddress mailAddress, boolean wantsReceipt) {
+    public void vote(Party party) {
+        voteCounter.countParty(party);
+    }
 
+    public void triggerVoteProcess(Party party, Nif nif, MailAddress mailAddress, boolean wantsReceipt)
+    {
         // Check if the user can vote
         if (electoralOrganism.canVote(nif)) {
 
             // Send the vote and invalidate the voter using the nif
-            voteCounter.countParty(party);
+            vote(party);
             electoralOrganism.disableVoter(nif);
 
             // Send the email if the voter wants
             if (wantsReceipt) {
-                sendeReceipt(mailAddress, electoralOrganism.askForDigitalSignature(party));
+                sendeReceipt(mailAddress);
             }
-            System.out.println("Everything OK dude.");
+            System.out.println("Vote accepted successfully.");
         }
         // Notify that the voter cannot vote
         else {
-            throw new IllegalStateException("This voter cannot vote again.");
+            throw new IllegalStateException("This voter cannot vote.");
         }
     }
 
-    public void sendeReceipt(MailAddress address, DigitalSignature digitalSignature) {
-        mailerService.send(address, digitalSignature);
+    public void sendeReceipt(MailAddress address) {
+        mailerService.send(address, electoralOrganism.askForDigitalSignature(null));
     }
 }

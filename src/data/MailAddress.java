@@ -2,11 +2,27 @@ package data;
 
 public class MailAddress {
 
-    // TODO Control the arguments
+    private static final String ConstructorExceptionMsgNull = "Null string.";
+    private static final String ConstructorExceptionMsgNotAnEmail = "Not an email.";
 
     private final String mailAddress;
 
     public MailAddress(String mailAddress) {
+
+        // Control null parameter
+        if (mailAddress == null) {
+            throw new NullPointerException(ConstructorExceptionMsgNull);
+        }
+        // Is an actual email
+        if(!mailAddress.contains("@"))
+        {
+            throw new IllegalArgumentException(ConstructorExceptionMsgNotAnEmail);
+        }
+        // Is an actual domain
+        if(!mailAddress.contains(".")) {
+            throw new IllegalArgumentException(ConstructorExceptionMsgNull);
+        }
+
         this.mailAddress = mailAddress;
     }
 
