@@ -13,14 +13,9 @@ import java.util.Set;
  */
 public class VotingKiosk {
 
-    private Set<Party> parties;
     private VoteCounter voteCounter;
     private ElectoralOrganism electoralOrganism;
     private MailerService mailerService;
-
-    public VotingKiosk() {
-        voteCounter = new VoteCounter(parties);
-    }
 
     public void setElectoralOrganism(ElectoralOrganism eO) {
         electoralOrganism = eO;
@@ -30,11 +25,16 @@ public class VotingKiosk {
         mailerService = mService;
     }
 
+    public void setVoteCounter(VoteCounter voteCounter)
+    {
+        this.voteCounter = voteCounter;
+    }
+
     public void vote(Party party) {
         voteCounter.countParty(party);
     }
 
-    public void VotingProcess(Party party, Nif nif, MailAddress mailAddress, boolean wantsReceipt)
+    public void votingProcess(Party party, Nif nif, MailAddress mailAddress, boolean wantsReceipt)
             throws VotingRightsFailedException {
         // Check if the user can vote
         if (electoralOrganism.canVote(nif)) {
