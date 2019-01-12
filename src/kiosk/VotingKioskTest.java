@@ -1,6 +1,6 @@
 package kiosk;
 
-import Tests.Mocks.ElectoralOrganismEverythingValid;
+import Tests.Mocks.MailerServiceMock;
 import data.DigitalSignature;
 import data.MailAddress;
 import data.Nif;
@@ -12,7 +12,6 @@ import services.MailerService;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
-import java.lang.reflect.Executable;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -52,13 +51,8 @@ public class VotingKioskTest {
         testMailAddress = new MailAddress("mail@mail.com");
 
         testVotingKiosk = new VotingKiosk();
-        testElectoralOrganism = new ElectoralOrganismEverythingValid();
-        //testMailerService = new Mai
-
-
         testVotingKiosk.setVoteCounter(testVoteCounter);
-        //testVotingKiosk.setElectoralOrganism(testElectoralOrganismEverythingOk);
-        //testVotingKiosk.setMailerService(testM);
+        testVotingKiosk.setMailerService((MailerService) new MailerServiceMock());
     }
 
     @Test
@@ -90,6 +84,37 @@ public class VotingKioskTest {
 
         testVotingKiosk.setElectoralOrganism(electoralOrganismImpl);
         testVotingKiosk.setMailerService(mailerServiceImpl);
+
+        try {
+            testVotingKiosk.votingProcess(testParty, testingNif, testMailAddress, true);
+        } catch (VotingRightsFailedException e) {
+            e.printStackTrace();
+        }
+
+        assertEquals("Vote accepted successfully.\n", outContent.toString());
+    }
+
+    @Test
+    void testVotingWithInvalidatedNif() {
+
+        ElectoralOrganism electoralOrganismImpl = new ElectoralOrganism() {
+            @Override
+            public boolean canVote(Nif nif) {
+                return true;
+            }
+
+            @Override
+            public void disableVoter(Nif nif) {
+                // Do nothing
+            }
+
+            @Override
+            public DigitalSignature askForDigitalSignature(Party party) {
+                return new DigitalSignature(party.getName().getBytes());
+            }
+        };
+
+        testVotingKiosk.setElectoralOrganism(electoralOrganismImpl);
 
         try {
             testVotingKiosk.votingProcess(testParty, testingNif, testMailAddress, true);
