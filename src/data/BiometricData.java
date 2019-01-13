@@ -2,17 +2,17 @@ package data;
 
 public class BiometricData {
 
-    private final long facialKey;
+    private final long faceKey;
     private final long fingerprintKey;
 
     public BiometricData(long facialKey, long fingerprintKey)
     {
-        this.facialKey = facialKey;
+        this.faceKey = facialKey;
         this.fingerprintKey = fingerprintKey;
     }
 
-    public long getFacialKey() {
-        return facialKey;
+    public long getFaceKey() {
+        return faceKey;
     }
 
     public long getFingerprintKey() {
@@ -31,13 +31,13 @@ public class BiometricData {
             return false;
         }
 
-        return facialKey == ((BiometricData)other).facialKey &&
+        return faceKey == ((BiometricData)other).faceKey &&
                 fingerprintKey == ((BiometricData)other).fingerprintKey;
     }
 
     @Override
     public String toString() {
-        return "BiometricData{" + "facial key='" + facialKey + ", fingerprint key='" + fingerprintKey + '\'' + '}';
+        return "BiometricData{" + "facial key='" + faceKey + ", fingerprint key='" + fingerprintKey + '\'' + '}';
     }
 
     // endregion

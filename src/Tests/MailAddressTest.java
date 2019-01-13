@@ -1,5 +1,6 @@
-package data;
+package Tests;
 
+import data.MailAddress;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.function.Executable;
 

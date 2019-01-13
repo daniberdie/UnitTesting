@@ -1,5 +1,8 @@
-package data;
+package Tests;
 
+import data.Nif;
+import data.Party;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.function.Executable;
 
@@ -13,7 +16,7 @@ public class NifTest {
 
         Executable exception = () -> new Nif(null);
 
-        assertThrows(NullPointerException.class, exception, Party.CONSTRUCTOR_EXCEPTION_MSG_NULL);
+        Assertions.assertThrows(NullPointerException.class, exception, Party.CONSTRUCTOR_EXCEPTION_MSG_NULL);
     }
 
     @Test

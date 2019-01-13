@@ -1,11 +1,14 @@
-package kiosk;
+package Tests;
 
-import Tests.ElectoralOrganismMock;
-import Tests.MailerServiceMock;
+import Tests.mocks.ElectoralOrganismMock;
+import Tests.mocks.MailerServiceMock;
 import data.DigitalSignature;
 import data.MailAddress;
 import data.Nif;
 import data.Party;
+import kiosk.VoteCounter;
+import kiosk.VotingKiosk;
+import kiosk.VotingRightsFailedException;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import services.ElectoralOrganism;

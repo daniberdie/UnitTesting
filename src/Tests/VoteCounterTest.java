@@ -1,7 +1,8 @@
-package kiosk;
+package Tests;
 
 import data.Nif;
 import data.Party;
+import kiosk.VoteCounter;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

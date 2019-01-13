@@ -1,7 +1,9 @@
-package data;
+package Tests;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.function.Executable;
+import data.Party;
+
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class PartyTest {
