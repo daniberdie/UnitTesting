@@ -27,26 +27,23 @@ public class VotingKioskTest {
     private static final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
 
     private static VotingKiosk testVotingKiosk;
-    private static VoteCounter testVoteCounter;
 
     private static Party testParty;
     private static Nif testingNif;
     private static MailAddress testMailAddress;
 
-    private static Set<Party> testParties;
-
     @BeforeAll
     public static void initTest() {
         System.setOut(new PrintStream(outContent));
 
-        testParties = new HashSet<>();
+        Set<Party> testParties = new HashSet<>();
         testParties.add(new Party("PP"));
         testParties.add(new Party("PSOE"));
         testParties.add(new Party("Ciudadanos"));
         testParties.add(new Party("Podemos"));
         testParties.add(new Party("ERC"));
         testParties.add(new Party("Vox"));
-        testVoteCounter = new VoteCounter(testParties);
+        VoteCounter testVoteCounter = new VoteCounter(testParties);
 
         testParty = new Party("PP");
         testingNif = new Nif("49129125H");
