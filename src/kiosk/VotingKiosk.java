@@ -53,8 +53,17 @@ public class VotingKiosk {
         this.voteCounter = voteCounter;
     }
 
-    public void setBiometricReader(BiometricReader biometricReader) {
 
+    public void setBiometricScanner(BiometricScanner biometricScanner) {
+        this.biometricScanner = biometricScanner;
+    }
+
+    public void setBiometricReader(BiometricReader biometricReader) {
+        this.biometricReader = biometricReader;
+    }
+
+    public void setBiometricSoftware(BiometricSoftware biometricSoftware) {
+        this.biometricSoftware = biometricSoftware;
     }
 
     // endregion
@@ -86,11 +95,15 @@ public class VotingKiosk {
     }
 
     public void votingProcess(Party party, MailAddress mailAddress) {
-        // Read biometric data
-        BiometricData biometricData = new BiometricData(biometricScanner.scanFace(), biometricScanner.scanFingerprint());
+        // Read biometric data from the scanner
+        BiometricData biometricData1 = new BiometricData(biometricScanner.scanFace(), biometricScanner.scanFingerprint());
+
+        // Get the biometric data read by some electronic passport devide
+        BiometricData biometricData2 = biometricReader.readBiometricData();
+
         try {
             // Check if the user can vote
-            biometricSoftware.verifyBiometricData(biometricData);
+            biometricSoftware.verifyBiometricData(biometricData1, biometricData2);
 
             // Send the vote and invalidate the voter using the nif
             vote(party);

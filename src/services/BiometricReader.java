@@ -1,6 +1,7 @@
 package services;
 
 import data.BiometricData;
+import data.Nif;
 
 /**
  * This interface describes the methods that would implement a Biometric Reader.
@@ -10,7 +11,6 @@ import data.BiometricData;
  */
 public interface BiometricReader {
 
-    // TODO Consider the eNif or electronic passport
     BiometricData readBiometricData();
 
 }
