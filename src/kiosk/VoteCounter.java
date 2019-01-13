@@ -10,6 +10,9 @@ import java.util.Set;
  */
 public class VoteCounter {
 
+    private static final String EXCEPTION_MSG_NON_EXISTING_PARTY = "This party does not exist.";
+
+
     private int nullVotes = 0;
     private int blankVotes = 0;
     private HashMap<Party, Integer> partyVotes;
@@ -24,6 +27,11 @@ public class VoteCounter {
     }
 
     public void countParty(Party party) {
+        // Control that the party exists
+        if (!partyVotes.containsKey(party))
+        {
+            throw new IllegalArgumentException(EXCEPTION_MSG_NON_EXISTING_PARTY);
+        }
         partyVotes.put(party, partyVotes.get(party) + 1);
     }
 

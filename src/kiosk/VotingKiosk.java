@@ -6,8 +6,6 @@ import data.MailAddress;
 import services.ElectoralOrganism;
 import services.MailerService;
 
-import java.util.Set;
-
 /**
  * Implements a simplification of Use Case: Emit eVote
  */
@@ -16,6 +14,27 @@ public class VotingKiosk {
     private VoteCounter voteCounter;
     private ElectoralOrganism electoralOrganism;
     private MailerService mailerService;
+
+    // region Constructors
+
+    public VotingKiosk()
+    {
+        voteCounter = null;
+    }
+
+    public VotingKiosk(VoteCounter voteCounter)
+    {
+        this.voteCounter = voteCounter;
+    }
+
+    public VotingKiosk(VoteCounter voteCounter, ElectoralOrganism electoralOrganism, MailAddress mailAddress)
+    {
+        this.voteCounter = voteCounter;
+    }
+
+    // endregion
+
+    // region Setters
 
     public void setElectoralOrganism(ElectoralOrganism eO) {
         electoralOrganism = eO;
@@ -29,6 +48,8 @@ public class VotingKiosk {
     {
         this.voteCounter = voteCounter;
     }
+
+    // endregion
 
     public void vote(Party party) {
         voteCounter.countParty(party);

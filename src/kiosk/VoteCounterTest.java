@@ -1,9 +1,11 @@
 package kiosk;
 
+import data.Nif;
 import data.Party;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.function.Executable;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -13,6 +15,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class VoteCounterTest {
 
     private Party testParty = new Party("ERC");
+    private Party testNonExistingParty = new Party("PACMA");
     private Party testNullVote = new Party(Party.NULL_VOTE);
     private Party testBlankVote = new Party(Party.BLANK_VOTE);
 
@@ -86,6 +89,16 @@ class VoteCounterTest {
     void testScrutinizeBlank() {
         testVoteCounter.scrutinize(testBlankVote);
         assertEquals(1, testVoteCounter.getBlanks());
+    }
+
+    @Test
+    void testScrutinizeNonExistingPartyThrowsException() {
+        Throwable exception = assertThrows(IllegalArgumentException.class,
+                () -> {
+                    testVoteCounter.scrutinize(testNonExistingParty);
+                }
+        );
+        assertEquals(IllegalArgumentException.class, exception.getClass());
     }
 
     // endregion
