@@ -10,6 +10,8 @@ import services.MailerService;
  */
 public class MailerServiceMock implements MailerService {
 
+    public boolean hasBeenCalled = false;
+
     /**
      * Does literally nothing.
      * @param address The address to send the hypothetical email.
@@ -17,6 +19,6 @@ public class MailerServiceMock implements MailerService {
      */
     @Override
     public void send(MailAddress address, DigitalSignature signature) {
-        // Do nothing
+        hasBeenCalled = true;
     }
 }
