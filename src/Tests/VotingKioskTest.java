@@ -1,20 +1,17 @@
 package Tests;
 
-import Tests.mocks.ElectoralOrganismMock;
-import Tests.mocks.MailerServiceMock;
-import data.DigitalSignature;
-import data.MailAddress;
-import data.Nif;
-import data.Party;
+import Tests.mocks.*;
+import data.*;
 import kiosk.VoteCounter;
 import kiosk.VotingKiosk;
 import kiosk.VotingRightsFailedException;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import services.ElectoralOrganism;
-import services.MailerService;
+import services.*;
 
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.PrintStream;
 import java.util.HashSet;
 import java.util.Set;
@@ -53,6 +50,12 @@ public class VotingKioskTest {
         testVotingKiosk.setVoteCounter(testVoteCounter);
     }
 
+    @BeforeEach
+    public void clearOutContent() {
+        // Reset the outputStream to avoid reading duplicities
+        outContent.reset();
+    }
+
     @Test
     void testVoteCorrectly() {
 
@@ -64,7 +67,7 @@ public class VotingKioskTest {
         } catch (VotingRightsFailedException e) {
             e.printStackTrace();
         }
-        
+
         assertEquals("Vote accepted successfully.\n", outContent.toString());
     }
 
@@ -98,11 +101,42 @@ public class VotingKioskTest {
         testVotingKiosk.setElectoralOrganism(electoralOrganismImpl);
         testVotingKiosk.setMailerService(mailerServiceImpl);
 
-        Throwable exception = assertThrows(VotingRightsFailedException.class,
-                () -> {
-                    testVotingKiosk.votingProcess(testParty, testingNif, testMailAddress);
-                }
-        );
-        assertEquals(VotingRightsFailedException.class, exception.getClass());
+        assertThrows(VotingRightsFailedException.class,
+                () -> testVotingKiosk.votingProcess(testParty, testingNif, testMailAddress));
+    }
+
+    @Test
+    void testVotingBiometric() {
+
+        testVotingKiosk.setBiometricScanner(new BiometricScannerMock());
+        testVotingKiosk.setBiometricReader(new BiometricReaderMock());
+        testVotingKiosk.setBiometricSoftware(new BiometricSoftwareMock());
+
+        try {
+            testVotingKiosk.votingProcess(testParty, testingNif, testMailAddress);
+        } catch (VotingRightsFailedException e) {
+            e.printStackTrace();
+        }
+
+        assertEquals("Vote accepted successfully.\n", outContent.toString());
+    }
+
+    @Test
+    void testVotingBiometricFailure() {
+
+        BiometricSoftware biometricSoftwareImpl = new BiometricSoftware() {
+            @Override
+            public boolean verifyBiometricData(BiometricData biometricData1, BiometricData biometricData2) {
+                return false;
+            }
+        };
+
+        testVotingKiosk.setBiometricScanner(new BiometricScannerMock());
+        testVotingKiosk.setBiometricReader(new BiometricReaderMock());
+        testVotingKiosk.setBiometricSoftware(biometricSoftwareImpl);
+        testVotingKiosk.setMailerService(new MailerServiceMock());
+
+        assertThrows(BiometricVerificationFailedException.class,
+                () -> testVotingKiosk.votingProcess(testParty, testMailAddress));
     }
 }

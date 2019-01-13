@@ -72,6 +72,15 @@ public class VotingKiosk {
         voteCounter.countParty(party);
     }
 
+    /**
+     * A method to implement the use case of voting. This method represents the voting using Nif.
+     * If the mail is null, means that the voter did not give it and thus the receipt will not be sent.
+     *
+     * @param party       The party to vote.
+     * @param nif         The ID of the voter.
+     * @param mailAddress The mail address. Can be null.
+     * @throws VotingRightsFailedException Throws this exception if the voter cannot vote for any reason.
+     */
     public void votingProcess(Party party, Nif nif, MailAddress mailAddress)
             throws VotingRightsFailedException {
         // Check if the user can vote
@@ -94,32 +103,41 @@ public class VotingKiosk {
         }
     }
 
-    public void votingProcess(Party party, MailAddress mailAddress) {
+    /**
+     * A method to implement the use case of voting. This method represents the voting using biometric data.
+     * Is an overload of votingProcess using Nif.
+     * If the mail is null, means that the voter did not give it and thus the receipt will not be sent.
+     *
+     * @param party       The party to vote.
+     * @param mailAddress The mail address. Can be null.
+     */
+    public void votingProcess(Party party, MailAddress mailAddress)
+            throws BiometricVerificationFailedException {
         // Read biometric data from the scanner
         BiometricData biometricData1 = new BiometricData(biometricScanner.scanFace(), biometricScanner.scanFingerprint());
 
         // Get the biometric data read by some electronic passport devide
         BiometricData biometricData2 = biometricReader.readBiometricData();
 
-        try {
-            // Check if the user can vote
-            biometricSoftware.verifyBiometricData(biometricData1, biometricData2);
-
-            // Send the vote and invalidate the voter using the nif
-            vote(party);
-
-            // Send the email if the voter have provided it
-            if (mailAddress != null) {
-                sendeReceipt(mailAddress, party);
-            }
-
-            System.out.println("Vote accepted successfully.");
-        } catch (BiometricVerificationFailedException e) {
-            System.out.println("Biometric verification failed.");
+        // Check if the user can vote
+        if (!biometricSoftware.verifyBiometricData(biometricData1, biometricData2)) {
+            throw new BiometricVerificationFailedException("Biometric verification failed.");
         }
+
+        // Send the vote and invalidate the voter using the nif
+        vote(party);
+
+        // Send the email if the voter have provided it
+        if (mailAddress != null) {
+            sendeReceipt(mailAddress, party);
+        }
+
+        System.out.println("Vote accepted successfully.");
+
     }
 
     public void sendeReceipt(MailAddress address, Party party) {
         mailerService.send(address, electoralOrganism.askForDigitalSignature(party));
     }
 }
+

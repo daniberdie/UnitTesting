@@ -10,8 +10,7 @@ import services.BiometricVerificationFailedException;
  */
 public class BiometricSoftwareMock implements BiometricSoftware {
     @Override
-    public void verifyBiometricData(BiometricData biometricData1, BiometricData biometricData2)
-            throws BiometricVerificationFailedException {
-        // Do nothing
+    public boolean verifyBiometricData(BiometricData biometricData1, BiometricData biometricData2) {
+        return true;
     }
 }

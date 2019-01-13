@@ -11,7 +11,6 @@ import data.BiometricData;
  */
 public interface BiometricSoftware {
 
-    void verifyBiometricData(BiometricData biometricData1, BiometricData biometricData2)
-            throws BiometricVerificationFailedException;
+    boolean verifyBiometricData(BiometricData biometricData1, BiometricData biometricData2);
 
 }
