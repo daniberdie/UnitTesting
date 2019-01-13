@@ -133,8 +133,6 @@ public class VotingKioskTest {
             }
         };
 
-
-
         testVotingKiosk.setBiometricScanner(new BiometricScannerMock());
         testVotingKiosk.setBiometricReader(new BiometricReaderMock());
         testVotingKiosk.setBiometricSoftware(biometricSoftwareImpl);

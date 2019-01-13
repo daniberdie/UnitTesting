@@ -137,4 +137,3 @@ public class VotingKiosk {
         mailerService.send(address, electoralOrganism.askForDigitalSignature(party));
     }
 }
-
