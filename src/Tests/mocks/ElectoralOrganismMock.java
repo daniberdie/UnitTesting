@@ -6,7 +6,7 @@ import data.Party;
 import services.ElectoralOrganism;
 
 /**
- * A mock implementation of ElectoralOrganism which always returns as if everything works correctly.
+ * A basic implementation of ElectoralOrganism which always returns as if everything works correctly.
  * Used in some tests to test a normal, expected behaviour of a successful event.
  */
 public class ElectoralOrganismMock implements ElectoralOrganism {

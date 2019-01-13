@@ -1,7 +1,11 @@
 package data;
 
 /**
- * The name of a party that participates in an election.
+ * This class describes the name of a party that participates in an election.
+ * This class is immutable.
+ *
+ * @author Daniel Berdie Pardo
+ * @version 1.0 13 Jan 2018
  */
 public class Party {
 

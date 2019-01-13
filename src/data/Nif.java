@@ -1,5 +1,12 @@
 package data;
 
+/**
+ * This class describes a ID of a voter.
+ * This class is immutable.
+ *
+ * @author Daniel Berdie Pardo
+ * @version 1.0 13 Jan 2018
+ */
 public class Nif {
 
     private static final String CONSTRUCTOR_EXCEPTION_MSG_NULL = "Null string.";

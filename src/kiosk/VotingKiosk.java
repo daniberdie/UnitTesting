@@ -7,7 +7,11 @@ import data.MailAddress;
 import services.*;
 
 /**
- * Implements a simplification of Use Case: Emit eVote
+ * This class describes simplification of the Use Case "Emit eVote".
+ * This class is immutable.
+ *
+ * @author Daniel Berdie Pardo
+ * @version 1.0 13 Jan 2018
  */
 public class VotingKiosk {
 

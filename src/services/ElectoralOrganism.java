@@ -5,7 +5,11 @@ import data.Nif;
 import data.DigitalSignature;
 
 /**
- * External service for signing votes and manage the electoral roll
+ * This interface describes the methods that would implement
+ * an external service for signing votes and manage the electoral roll.
+ *
+ * @author Daniel Berdie Pardo
+ * @version 1.0 13 Jan 2018
  */
 public interface ElectoralOrganism {
 

@@ -6,7 +6,11 @@ import java.util.HashMap;
 import java.util.Set;
 
 /**
- * A class that represents the result in an election site.
+ * This class describes the result in an election site.
+ * This class is immutable.
+ *
+ * @author Daniel Berdie Pardo
+ * @version 1.0 13 Jan 2018
  */
 public class VoteCounter {
 

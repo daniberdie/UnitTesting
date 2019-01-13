@@ -1,5 +1,12 @@
 package data;
 
+/**
+ * This class describes a mail address of a voter.
+ * This class is immutable.
+ *
+ * @author Daniel Berdie Pardo
+ * @version 1.0 13 Jan 2018
+ */
 public class MailAddress {
 
     private static final String CONSTRUCTOR_EXCEPTION_MSG_NULL = "Null string.";

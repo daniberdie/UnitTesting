@@ -5,7 +5,7 @@ import data.MailAddress;
 import services.MailerService;
 
 /**
- * A mock implementation of MailerService which does nothing.
+ * A basic implementation of MailerService which does nothing.
  * Used in some tests to test a normal, expected behaviour of a successful event.
  */
 public class MailerServiceMock implements MailerService {
