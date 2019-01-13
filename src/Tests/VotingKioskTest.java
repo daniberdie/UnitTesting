@@ -63,7 +63,7 @@ public class VotingKioskTest {
         testVotingKiosk.setMailerService(new MailerServiceMock());
 
         try {
-            testVotingKiosk.votingProcess(testParty, testingNif, testMailAddress, true);
+            testVotingKiosk.votingProcess(testParty, testingNif, testMailAddress);
         } catch (VotingRightsFailedException e) {
             e.printStackTrace();
         }
@@ -103,7 +103,7 @@ public class VotingKioskTest {
 
         Throwable exception = assertThrows(VotingRightsFailedException.class,
                 () -> {
-                    testVotingKiosk.votingProcess(testParty, testingNif, testMailAddress, true);
+                    testVotingKiosk.votingProcess(testParty, testingNif, testMailAddress);
                 }
         );
         assertEquals(VotingRightsFailedException.class, exception.getClass());

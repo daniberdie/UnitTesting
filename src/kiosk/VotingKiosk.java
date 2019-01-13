@@ -1,10 +1,10 @@
 package kiosk;
 
+import data.BiometricData;
 import data.Nif;
 import data.Party;
 import data.MailAddress;
-import services.ElectoralOrganism;
-import services.MailerService;
+import services.*;
 
 /**
  * Implements a simplification of Use Case: Emit eVote
@@ -15,20 +15,21 @@ public class VotingKiosk {
     private ElectoralOrganism electoralOrganism;
     private MailerService mailerService;
 
+    private BiometricScanner biometricScanner;
+    private BiometricReader biometricReader;
+    private BiometricSoftware biometricSoftware;
+
     // region Constructors
 
-    public VotingKiosk()
-    {
+    public VotingKiosk() {
         voteCounter = null;
     }
 
-    public VotingKiosk(VoteCounter voteCounter)
-    {
+    public VotingKiosk(VoteCounter voteCounter) {
         this.voteCounter = voteCounter;
     }
 
-    public VotingKiosk(VoteCounter voteCounter, ElectoralOrganism electoralOrganism, MailAddress mailAddress)
-    {
+    public VotingKiosk(VoteCounter voteCounter, ElectoralOrganism electoralOrganism, MailAddress mailAddress) {
         this.voteCounter = voteCounter;
     }
 
@@ -44,9 +45,12 @@ public class VotingKiosk {
         mailerService = mService;
     }
 
-    public void setVoteCounter(VoteCounter voteCounter)
-    {
+    public void setVoteCounter(VoteCounter voteCounter) {
         this.voteCounter = voteCounter;
+    }
+
+    public void setBiometricReader(BiometricReader biometricReader) {
+
     }
 
     // endregion
@@ -55,7 +59,7 @@ public class VotingKiosk {
         voteCounter.countParty(party);
     }
 
-    public void votingProcess(Party party, Nif nif, MailAddress mailAddress, boolean wantsReceipt)
+    public void votingProcess(Party party, Nif nif, MailAddress mailAddress)
             throws VotingRightsFailedException {
         // Check if the user can vote
         if (electoralOrganism.canVote(nif)) {
@@ -64,15 +68,37 @@ public class VotingKiosk {
             vote(party);
             electoralOrganism.disableVoter(nif);
 
-            // Send the email if the voter wants
-            if (wantsReceipt) {
+            // Send the email if the voter have provided it
+            if (mailAddress != null) {
                 sendeReceipt(mailAddress, party);
             }
+
             System.out.println("Vote accepted successfully.");
         }
         // Notify that the voter cannot vote
         else {
             throw new VotingRightsFailedException("This voter cannot vote.");
+        }
+    }
+
+    public void votingProcess(Party party, MailAddress mailAddress) {
+        // Read biometric data
+        BiometricData biometricData = new BiometricData(biometricScanner.scanFace(), biometricScanner.scanFingerprint());
+        try {
+            // Check if the user can vote
+            biometricSoftware.verifyBiometricData(biometricData);
+
+            // Send the vote and invalidate the voter using the nif
+            vote(party);
+
+            // Send the email if the voter have provided it
+            if (mailAddress != null) {
+                sendeReceipt(mailAddress, party);
+            }
+
+            System.out.println("Vote accepted successfully.");
+        } catch (BiometricVerificationFailedException e) {
+            System.out.println("Biometric verification failed.");
         }
     }
 
