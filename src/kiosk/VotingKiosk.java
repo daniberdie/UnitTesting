@@ -111,16 +111,13 @@ public class VotingKiosk {
      * @param party       The party to vote.
      * @param mailAddress The mail address. Can be null.
      */
-    public void votingProcess(Party party, MailAddress mailAddress)
+    public void votingProcess(Party party, BiometricData providedBiometricData, MailAddress mailAddress)
             throws BiometricVerificationFailedException {
         // Read biometric data from the scanner
-        BiometricData biometricData1 = new BiometricData(biometricScanner.scanFace(), biometricScanner.scanFingerprint());
-
-        // Get the biometric data read by some electronic passport devide
-        BiometricData biometricData2 = biometricReader.readBiometricData();
+        BiometricData scannedBiometricData = new BiometricData(biometricScanner.scanFace(), biometricScanner.scanFingerprint());
 
         // Check if the user can vote
-        if (!biometricSoftware.verifyBiometricData(biometricData1, biometricData2)) {
+        if (!biometricSoftware.verifyBiometricData(providedBiometricData, scannedBiometricData)) {
             throw new BiometricVerificationFailedException("Biometric verification failed.");
         }
 

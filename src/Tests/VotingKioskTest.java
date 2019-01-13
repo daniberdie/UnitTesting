@@ -28,6 +28,7 @@ public class VotingKioskTest {
     private static Party testParty;
     private static Nif testingNif;
     private static MailAddress testMailAddress;
+    private static BiometricData testBiometricData;
 
     @BeforeAll
     public static void initTest() {
@@ -45,6 +46,7 @@ public class VotingKioskTest {
         testParty = new Party("PP");
         testingNif = new Nif("49129125H");
         testMailAddress = new MailAddress("mail@mail.com");
+        testBiometricData = new BiometricData(1,1);
 
         testVotingKiosk = new VotingKiosk();
         testVotingKiosk.setVoteCounter(testVoteCounter);
@@ -113,8 +115,8 @@ public class VotingKioskTest {
         testVotingKiosk.setBiometricSoftware(new BiometricSoftwareMock());
 
         try {
-            testVotingKiosk.votingProcess(testParty, testingNif, testMailAddress);
-        } catch (VotingRightsFailedException e) {
+            testVotingKiosk.votingProcess(testParty, testBiometricData, testMailAddress);
+        } catch (BiometricVerificationFailedException e) {
             e.printStackTrace();
         }
 
@@ -131,12 +133,14 @@ public class VotingKioskTest {
             }
         };
 
+
+
         testVotingKiosk.setBiometricScanner(new BiometricScannerMock());
         testVotingKiosk.setBiometricReader(new BiometricReaderMock());
         testVotingKiosk.setBiometricSoftware(biometricSoftwareImpl);
         testVotingKiosk.setMailerService(new MailerServiceMock());
 
         assertThrows(BiometricVerificationFailedException.class,
-                () -> testVotingKiosk.votingProcess(testParty, testMailAddress));
+                () -> testVotingKiosk.votingProcess(testParty, testBiometricData, testMailAddress));
     }
 }
